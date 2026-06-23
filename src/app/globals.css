@@ -1,0 +1,27 @@
+/* Global CSS overrides */
+body {
+  background-color: #0c0c0c !important;
+}
+
+.elementor-invisible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  animation: none !important;
+}
+
+/* Header navigation alignment override for desktop screen sizes */
+@media (min-width: 1025px) {
+  .elementor-element-f72a554 .rkit-navmenu-container {
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+  }
+  .elementor-element-f72a554 .rkit-navmenu {
+    width: 100% !important;
+  }
+  .elementor-element-f72a554 .rkit-menu-container {
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+  }
+}
