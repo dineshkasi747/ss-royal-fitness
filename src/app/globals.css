@@ -25,3 +25,27 @@ body {
     width: 100% !important;
   }
 }
+
+/* S S Fitness Theme Card Grid Helpers */
+.ss-theme-cards-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.ss-theme-card-item {
+  width: 48% !important;
+  max-width: 48% !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .ss-theme-card-item {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+

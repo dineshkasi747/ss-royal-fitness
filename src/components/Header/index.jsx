@@ -48,14 +48,6 @@ export default function Header() {
         { label: '404', href: '/404' },
       ],
     },
-    {
-      label: 'Blog',
-      href: '#',
-      dropdown: [
-        { label: 'News & Blog', href: '/blog' },
-        { label: 'Single Blog', href: '/blog-details' },
-      ],
-    },
     { label: 'Contact Us', href: '/contact' },
   ];
 
