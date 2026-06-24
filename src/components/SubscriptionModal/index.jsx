@@ -30,8 +30,14 @@ export default function SubscriptionModal({ isOpen, onClose, plan, upiConfig }) 
 
   const upiId = upiConfig?.upiId || '8309514957@ybl';
   const payeeName = upiConfig?.payeeName || 'krishna chowdary';
-  const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${plan.price}&cu=INR&tn=SS_FITNESS_${plan.id.toUpperCase()}`;
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiUrl)}`;
+  
+  // Full URL containing details, optimized for QR scanning
+  const upiQrUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${plan.price}&cu=INR&tn=SS_FITNESS_${plan.id.toUpperCase()}`;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiQrUrl)}`;
+
+  // Mobile App Intent URIs (Standard and Clean P2P fallbacks)
+  const upiIntentFull = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${plan.price}&cu=INR&tn=SS_FITNESS_${plan.id.toUpperCase()}`;
+  const upiIntentClean = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&cu=INR`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -238,15 +244,15 @@ export default function SubscriptionModal({ isOpen, onClose, plan, upiConfig }) 
                 {/* UPI Intent Section for Mobile */}
                 <div className="mobile-only-block" style={{ marginBottom: '20px' }}>
                   <p style={{ fontSize: '13px', color: '#a3a3a3', marginBottom: '10px', lineHeight: '1.4' }}>
-                    If you are on mobile, tap below to open any UPI app (PhonePe, Paytm, GPay) to pay:
+                    If you are on mobile, tap below to launch your UPI app (GPay, PhonePe, Paytm):
                   </p>
                   <a 
-                    href={upiUrl}
+                    href={upiIntentFull}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      backgroundColor: '#5f259f',
+                      backgroundColor: '#ff5e14',
                       color: '#ffffff',
                       textDecoration: 'none',
                       padding: '12px',
@@ -254,11 +260,32 @@ export default function SubscriptionModal({ isOpen, onClose, plan, upiConfig }) 
                       fontWeight: 'bold',
                       fontSize: '14px',
                       textAlign: 'center',
-                      boxShadow: '0 4px 10px rgba(95, 37, 159, 0.3)',
-                      marginBottom: '20px'
+                      boxShadow: '0 4px 10px rgba(255, 94, 20, 0.3)',
+                      marginBottom: '10px'
                     }}
                   >
-                    ⚡ Pay via UPI Application
+                    ⚡ Pay via UPI App (Auto-fill)
+                  </a>
+                  
+                  <a 
+                    href={upiIntentClean}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: '#222222',
+                      color: '#ffffff',
+                      textDecoration: 'none',
+                      padding: '10px',
+                      borderRadius: '6px',
+                      fontWeight: 'bold',
+                      fontSize: '12px',
+                      textAlign: 'center',
+                      border: '1px solid #333333',
+                      marginBottom: '15px'
+                    }}
+                  >
+                    ⚠️ App Error? Tap here (Manual Amount)
                   </a>
                 </div>
 
@@ -291,7 +318,50 @@ export default function SubscriptionModal({ isOpen, onClose, plan, upiConfig }) 
                   marginBottom: '20px',
                   borderLeft: '3px solid #ff5e14'
                 }}>
-                  <div style={{ marginBottom: '4px' }}>UPI ID: <strong style={{ color: '#ffffff' }}>{upiId}</strong></div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span>UPI ID: <strong style={{ color: '#ffffff' }}>{upiId}</strong></span>
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        navigator.clipboard.writeText(upiId);
+                        alert('UPI ID copied!');
+                      }}
+                      style={{
+                        padding: '2px 8px',
+                        backgroundColor: '#1b1b1b',
+                        border: '1px solid #333333',
+                        color: '#ff5e14',
+                        borderRadius: '3px',
+                        fontSize: '10px',
+                        cursor: 'pointer',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      Copy
+                    </button>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span>Amount: <strong style={{ color: '#ffffff' }}>₹{plan.price}</strong></span>
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        navigator.clipboard.writeText(plan.price.toString());
+                        alert('Amount copied!');
+                      }}
+                      style={{
+                        padding: '2px 8px',
+                        backgroundColor: '#1b1b1b',
+                        border: '1px solid #333333',
+                        color: '#ff5e14',
+                        borderRadius: '3px',
+                        fontSize: '10px',
+                        cursor: 'pointer',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      Copy
+                    </button>
+                  </div>
                   <div>Account: <strong style={{ color: '#ffffff' }}>{payeeName}</strong></div>
                 </div>
 
