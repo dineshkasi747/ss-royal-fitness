@@ -8,7 +8,7 @@ function isAuthenticated(request) {
 
 const defaultUpi = {
   id: 'upi_config',
-  upiId: '8309514957@ybl',
+  upiId: '8247312751@ibl',
   payeeName: 'krishna chowdary'
 };
 

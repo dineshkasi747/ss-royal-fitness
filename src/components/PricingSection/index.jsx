@@ -10,10 +10,12 @@ export default function PricingSection() {
     { id: '6_months', name: '6 Months Plan', price: 3500 },
     { id: '1_year', name: '1 Year Plan', price: 6000 }
   ]);
+
   const [upiConfig, setUpiConfig] = useState({
-    upiId: '8309514957@ybl',
+    upiId: '8247312751@ibl',
     payeeName: 'krishna chowdary'
   });
+
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 

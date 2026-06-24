@@ -28,7 +28,8 @@ export default function SubscriptionModal({ isOpen, onClose, plan, upiConfig }) 
     setStep(2);
   };
 
-  const upiId = upiConfig?.upiId || '8309514957@ybl';
+
+  const upiId = upiConfig?.upiId || '8247312751@ibl';
   const payeeName = upiConfig?.payeeName || 'krishna chowdary';
   
   // Full URL containing details, optimized for QR scanning
