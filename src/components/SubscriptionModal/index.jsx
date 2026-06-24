@@ -36,6 +36,11 @@ export default function SubscriptionModal({ isOpen, onClose, plan, upiConfig }) 
   const upiQrUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${plan.price}&cu=INR&tn=SS_FITNESS_${plan.id.toUpperCase()}`;
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiQrUrl)}`;
 
+  // Direct app URL schemes (bypasses browser intent chooser P2P blocks)
+  const phonepeUrl = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${plan.price}&cu=INR&tn=SS_FITNESS_${plan.id.toUpperCase()}`;
+  const gpayUrl = `gpay://upi/pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${plan.price}&cu=INR&tn=SS_FITNESS_${plan.id.toUpperCase()}`;
+  const paytmUrl = `paytmmp://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${plan.price}&cu=INR&tn=SS_FITNESS_${plan.id.toUpperCase()}`;
+
   // Mobile App Intent URIs (Standard and Clean P2P fallbacks)
   const upiIntentFull = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${plan.price}&cu=INR&tn=SS_FITNESS_${plan.id.toUpperCase()}`;
   const upiIntentClean = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&cu=INR`;
@@ -244,29 +249,91 @@ export default function SubscriptionModal({ isOpen, onClose, plan, upiConfig }) 
                 
                 {/* UPI Intent Section for Mobile */}
                 <div className="mobile-only-block" style={{ marginBottom: '20px' }}>
-                  <p style={{ fontSize: '13px', color: '#a3a3a3', marginBottom: '10px', lineHeight: '1.4' }}>
-                    If you are on mobile, tap below to launch your UPI app (GPay, PhonePe, Paytm):
+                  <p style={{ fontSize: '13px', color: '#a3a3a3', marginBottom: '12px', lineHeight: '1.4' }}>
+                    If you are on mobile, tap your preferred UPI application to complete the payment:
                   </p>
-                  <a 
-                    href={upiIntentFull}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: '#ff5e14',
-                      color: '#ffffff',
-                      textDecoration: 'none',
-                      padding: '12px',
-                      borderRadius: '6px',
-                      fontWeight: 'bold',
-                      fontSize: '14px',
-                      textAlign: 'center',
-                      boxShadow: '0 4px 10px rgba(255, 94, 20, 0.3)',
-                      marginBottom: '10px'
-                    }}
-                  >
-                    ⚡ Pay via UPI App (Auto-fill)
-                  </a>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '15px' }}>
+                    <a 
+                      href={phonepeUrl}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#5f259f',
+                        color: '#ffffff',
+                        textDecoration: 'none',
+                        padding: '12px',
+                        borderRadius: '6px',
+                        fontWeight: 'bold',
+                        fontSize: '14px',
+                        textAlign: 'center',
+                        boxShadow: '0 4px 10px rgba(95, 37, 159, 0.2)'
+                      }}
+                    >
+                      💜 Pay via PhonePe
+                    </a>
+
+                    <a 
+                      href={gpayUrl}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#1a73e8',
+                        color: '#ffffff',
+                        textDecoration: 'none',
+                        padding: '12px',
+                        borderRadius: '6px',
+                        fontWeight: 'bold',
+                        fontSize: '14px',
+                        textAlign: 'center',
+                        boxShadow: '0 4px 10px rgba(26, 115, 232, 0.2)'
+                      }}
+                    >
+                      💙 Pay via Google Pay (GPay)
+                    </a>
+
+                    <a 
+                      href={paytmUrl}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#00baf2',
+                        color: '#ffffff',
+                        textDecoration: 'none',
+                        padding: '12px',
+                        borderRadius: '6px',
+                        fontWeight: 'bold',
+                        fontSize: '14px',
+                        textAlign: 'center',
+                        boxShadow: '0 4px 10px rgba(0, 186, 242, 0.2)'
+                      }}
+                    >
+                      🩵 Pay via Paytm
+                    </a>
+
+                    <a 
+                      href={upiIntentFull}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#ff5e14',
+                        color: '#ffffff',
+                        textDecoration: 'none',
+                        padding: '12px',
+                        borderRadius: '6px',
+                        fontWeight: 'bold',
+                        fontSize: '14px',
+                        textAlign: 'center',
+                        boxShadow: '0 4px 10px rgba(255, 94, 20, 0.2)'
+                      }}
+                    >
+                      ⚡ Other UPI Application
+                    </a>
+                  </div>
                   
                   <a 
                     href={upiIntentClean}
@@ -277,10 +344,10 @@ export default function SubscriptionModal({ isOpen, onClose, plan, upiConfig }) 
                       backgroundColor: '#222222',
                       color: '#ffffff',
                       textDecoration: 'none',
-                      padding: '10px',
+                      padding: '8px',
                       borderRadius: '6px',
                       fontWeight: 'bold',
-                      fontSize: '12px',
+                      fontSize: '11px',
                       textAlign: 'center',
                       border: '1px solid #333333',
                       marginBottom: '15px'
